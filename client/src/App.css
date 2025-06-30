@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  background-color: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  max-width: 600px;
+  margin: 30px auto;
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid orange;
+}
+
+h1 {
+  text-align: center;
+  color: orange;
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  height: 400px;
+  overflow-y: auto;
+  background: #222;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.message {
+  padding: 8px;
+  margin-bottom: 6px;
+  background: #333;
+  border-radius: 6px;
+}
+
+.message.own {
+  background: #ff8800;
+  color: black;
+  text-align: right;
+}
+
+.input-area {
+  display: flex;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px 0 0 6px;
+  background: white;
+  color: black;
+}
+
+.input-area button {
+  padding: 10px 20px;
+  border: none;
+  background: orange;
+  color: black;
+  font-weight: bold;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+}
+
+.join-box {
+  background: #1a1a1a;
+  padding: 30px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid orange;
+  max-width: 400px;
+  margin: 100px auto;
+}
+
+.join-box input {
+  padding: 10px;
+  width: 80%;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.join-box button {
+  padding: 10px 20px;
+  margin-top: 15px;
+  background: orange;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
