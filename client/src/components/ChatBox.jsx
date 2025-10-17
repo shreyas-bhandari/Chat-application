@@ -1,85 +1,42 @@
-import React, { useEffect, useState, useRef } from "react";
-import io from "socket.io-client";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import socket from "../socket";
+import Message from "./Message";
+import MessageInput from "./MessageInput";
 
-const socket = io("http://localhost:5000");
-
-function ChatBox() {
-  const [username, setUsername] = useState("");
-  const [isJoined, setIsJoined] = useState(false);
-  const [text, setText] = useState("");
+const ChatBox = () => {
   const [messages, setMessages] = useState([]);
-  const bottomRef = useRef(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/messages")
-      .then(res => setMessages(res.data))
-      .catch(err => console.error(err));
-  }, []);
+    axios
+      .get(`${import.meta.env.VITE_SERVER_URL}/api/messages`)
+      .then((res) => setMessages(res.data));
 
-  useEffect(() => {
-    socket.on("receive_message", (msg) => {
+    socket.on("message", (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
-    return () => socket.off("receive_message");
+
+    return () => socket.off("message");
   }, []);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const sendMessage = () => {
-    if (text.trim()) {
-      socket.emit("send_message", { username, text });
-      setText("");
-    }
-  };
-
-  if (!isJoined) {
-    return (
-      <div className="join-box">
-        <h2>Enter your name to join</h2>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <button
-          onClick={() => {
-            if (username.trim()) {
-              // localStorage.setItem("username", username);
-              setIsJoined(true);
-            }
-          }}
-        >
-          Join
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="chat-box">
-      <div className="messages">
+    <div style={{ width: "400px", margin: "auto" }}>
+      <h2>Real-Time Chat App 💬</h2>
+      <div
+        style={{
+          border: "1px solid gray",
+          padding: "10px",
+          height: "300px",
+          overflowY: "scroll",
+        }}
+      >
         {messages.map((msg) => (
-          <div key={msg._id || Math.random()} className={`message ${msg.username === username ? "own" : ""}`}>
-            <strong>{msg.username}:</strong> {msg.text}
-          </div>
+          <Message key={msg._id} msg={msg} />
         ))}
-        <div ref={bottomRef}></div>
       </div>
-      <div className="input-area">
-        <input
-          type="text"
-          placeholder="Type message..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button onClick={sendMessage}>Send</button>
-      </div>
+      <MessageInput />
     </div>
   );
-}
+};
 
 export default ChatBox;

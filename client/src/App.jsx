@@ -3,8 +3,7 @@ import ChatBox from "./components/ChatBox";
 
 function App() {
   return (
-    <div className="app-container">
-      <h1>🧡 CodTech Chat</h1>
+    <div>
       <ChatBox />
     </div>
   );
