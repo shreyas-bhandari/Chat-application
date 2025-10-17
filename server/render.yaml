@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: codtech-chat-server
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        value: YOUR_MONGODB_ATLAS_URI_HERE
+      - key: CLIENT_ORIGIN
+        value: YOUR_CLIENT_ORIGIN_HERE
+      - key: PORT
+        value: 10000
